@@ -50,10 +50,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // 初始化 ActiobBar
     private void initActionBar(ViewHolder holder) {
-        //Toolbar toolbar = holder.get(R.id.toolbar);
-       /* if (toolbar != null) {
+        Toolbar toolbar = holder.get(R.id.toolbar);
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
-        }*/
+        }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
