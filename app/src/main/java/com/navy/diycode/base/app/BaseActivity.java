@@ -24,17 +24,16 @@ import java.io.Serializable;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-
+    private Diycode mDiycode;
     protected ViewHolder mViewHolder;
     private Toast mToast;
-    private Diycode mDiycode;
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDiycode = Diycode.getSingleInstance();
-        mViewHolder = new ViewHolder(this, null, getLayoutId());
+        mViewHolder = new ViewHolder(getLayoutInflater(), null, getLayoutId());
         setContentView(mViewHolder.getRootView());
         initActionBar(mViewHolder);
         initDatas();

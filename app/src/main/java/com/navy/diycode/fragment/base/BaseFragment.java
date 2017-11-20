@@ -3,7 +3,6 @@ package com.navy.diycode.fragment.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.INotificationSideChannel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewHolder = new ViewHolder(getActivity(),null, getLayoutId());
+        mViewHolder = new ViewHolder(getLayoutInflater(),null, getLayoutId());
         return mViewHolder.getRootView();
     }
 

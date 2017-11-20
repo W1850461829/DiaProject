@@ -20,20 +20,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 public class ViewHolder {
 
 
+    private final View mRootView;
     private SparseArray<View> mviews;
-    private View mRootView;
 
 
-    /* public ViewHolder(LayoutInflater inflater, ViewGroup parent, int layoutId) {
+    public ViewHolder(LayoutInflater inflater, ViewGroup parent, int layoutId) {
          this.mviews = new SparseArray<View>();
-         mRootView = inflater.inflate(layoutId, parent, false);
+        mRootView = inflater.inflate(layoutId, parent);
 
-     }*/
-    public ViewHolder(Context context, ViewGroup parent,int layoutId) {
+    }
+    /*public ViewHolder(Context context, ViewGroup parent,int layoutId) {
         this.mviews = new SparseArray<View>();
         mRootView = LayoutInflater.from(context).inflate(layoutId, parent,false);
 
-    }
+    }*/
 
     /**
      * 通过view的id来获取子view

@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mCache = new DataCache(this);
         mConfig = Config.getSingleInstance();
         initMenu(holder);
-        initViewPager(holder);
+       // initViewPager(holder);
     }
 
     private void initViewPager(ViewHolder holder) {
@@ -102,8 +102,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void initMenu(ViewHolder holder) {
-         Toolbar toolbar = holder.get(R.id.toolbar);
-         Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = holder.get(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.mipmap.logo_actionbar);
         DrawerLayout drawer = holder.get(R.id.drawer_layout);
         setSupportActionBar(toolbar);
