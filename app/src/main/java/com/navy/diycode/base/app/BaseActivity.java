@@ -1,10 +1,11 @@
 package com.navy.diycode.base.app;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gcssloop.diycode_sdk.api.Diycode;
 import com.navy.diycode.R;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 
@@ -25,16 +25,23 @@ import java.io.Serializable;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private ViewHolder mViewHolder;
+    protected ViewHolder mViewHolder;
     private Toast mToast;
+    private Diycode mDiycode;
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        mViewHolder = new ViewHolder(getLayoutInflater(), null, getLayoutId());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDiycode = Diycode.getSingleInstance();
+        mViewHolder = new ViewHolder(this, null, getLayoutId());
         setContentView(mViewHolder.getRootView());
+        initActionBar(mViewHolder);
+        initDatas();
+        initViews(mViewHolder, mViewHolder.getRootView());
     }
 
+    @LayoutRes
     protected abstract int getLayoutId();
 
     /**

@@ -3,7 +3,6 @@ package com.navy.diycode.base.app;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +24,15 @@ public class ViewHolder {
     private View mRootView;
 
 
-    public ViewHolder(LayoutInflater inflater, ViewGroup parent, int layoutid) {
-        mviews = new SparseArray<View>();
-        mRootView = inflater.inflate(layoutid, parent, false);
+    /* public ViewHolder(LayoutInflater inflater, ViewGroup parent, int layoutId) {
+         this.mviews = new SparseArray<View>();
+         mRootView = inflater.inflate(layoutId, parent, false);
+
+     }*/
+    public ViewHolder(Context context, ViewGroup parent,int layoutId) {
+        this.mviews = new SparseArray<View>();
+        mRootView = LayoutInflater.from(context).inflate(layoutId, parent,false);
+
     }
 
     /**
