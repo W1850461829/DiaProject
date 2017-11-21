@@ -26,14 +26,9 @@ public class ViewHolder {
 
     public ViewHolder(LayoutInflater inflater, ViewGroup parent, int layoutId) {
          this.mviews = new SparseArray<View>();
-        mRootView = inflater.inflate(layoutId, parent);
+        mRootView = inflater.inflate(layoutId, parent,false);
 
     }
-    /*public ViewHolder(Context context, ViewGroup parent,int layoutId) {
-        this.mviews = new SparseArray<View>();
-        mRootView = LayoutInflater.from(context).inflate(layoutId, parent,false);
-
-    }*/
 
     /**
      * 通过view的id来获取子view

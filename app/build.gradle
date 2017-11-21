@@ -27,9 +27,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:design:26.1.0'
-    compile project(':diycode-sdk')\
 
+    compile 'com.github.Gcssloop:ViewSupport:v1.3.0'
+    compile 'com.bm.photoview:library:1.4.1'
+    compile 'com.romandanylyk:pageindicatorview:0.1.2@aar'
+    compile 'com.android.support:customtabs:26.1.0'
 
+    compile project(':diycode-sdk')
+     compile 'com.android.support:support-v4:26.1.0'
+    compile project(':recyclerview')
+    compile project(':expectanim')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

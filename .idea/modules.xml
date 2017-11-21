@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/diycode-sdk/diycode-sdk.iml" filepath="$PROJECT_DIR$/diycode-sdk/diycode-sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/diyproject.iml" filepath="$PROJECT_DIR$/diyproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/expectanim/expectanim.iml" filepath="$PROJECT_DIR$/expectanim/expectanim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerview/recyclerview.iml" filepath="$PROJECT_DIR$/recyclerview/recyclerview.iml" />
     </modules>
   </component>
 </project>

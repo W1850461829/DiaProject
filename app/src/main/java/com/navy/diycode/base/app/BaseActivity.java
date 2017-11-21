@@ -24,7 +24,7 @@ import java.io.Serializable;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private Diycode mDiycode;
+    protected Diycode mDiycode;
     protected ViewHolder mViewHolder;
     private Toast mToast;
 

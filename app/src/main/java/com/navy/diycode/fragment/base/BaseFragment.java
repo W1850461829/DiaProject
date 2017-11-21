@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.gcssloop.diycode_sdk.api.Diycode;
 import com.navy.diycode.base.app.ViewHolder;
@@ -19,9 +20,9 @@ import com.navy.diycode.utils.DataCache;
 public abstract class BaseFragment extends Fragment {
 
     private ViewHolder mViewHolder;
-    private Config mConfig;
-    private Diycode mDiycode;
-    private DataCache mDataCache;
+    protected Config mConfig;
+    protected Diycode mDiycode;
+    protected DataCache mDataCache;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mViewHolder = new ViewHolder(getLayoutInflater(),null, getLayoutId());
+        mViewHolder = new ViewHolder(getLayoutInflater(), null, getLayoutId());
         return mViewHolder.getRootView();
     }
 
@@ -53,4 +54,7 @@ public abstract class BaseFragment extends Fragment {
         return mViewHolder;
     }
 
+    protected void toast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
 }

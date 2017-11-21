@@ -11,11 +11,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.gcssloop.diycode_sdk.api.user.bean.User;
+import com.gcssloop.diycode_sdk.api.user.bean.UserDetail;
 import com.navy.diycode.R;
 import com.navy.diycode.base.app.BaseActivity;
 import com.navy.diycode.base.app.ViewHolder;
@@ -45,7 +51,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mCache = new DataCache(this);
         mConfig = Config.getSingleInstance();
         initMenu(holder);
-       // initViewPager(holder);
+        //initViewPager(holder);
     }
 
     private void initViewPager(ViewHolder holder) {
@@ -103,7 +109,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initMenu(ViewHolder holder) {
         Toolbar toolbar = holder.get(R.id.toolbar);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.mipmap.logo_actionbar);
         DrawerLayout drawer = holder.get(R.id.drawer_layout);
         setSupportActionBar(toolbar);
@@ -132,6 +138,56 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void loadMenuData() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView avatar = (ImageView) headerView.findViewById(R.id.nav_header_image);
+        TextView username = (TextView) headerView.findViewById(R.id.nav_header_name);
+        TextView tagline = (TextView) headerView.findViewById(R.id.nav_header_tagline);
+        if (mDiycode.isLogin()) {
+            UserDetail me = mCache.getMe();
+            if (me == null) {
+                mDiycode.getMe();
+                return;
+            }
+            username.setText(me.getLogin());
+            tagline.setText(me.getTagline());
+            Glide.with(this).load(me.getAvatar_url()).into(avatar);
+            avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UserDetail me = mCache.getMe();
+                    if (me == null) {
+                        try {
+                            me = mDiycode.getMeNow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+                        }
+
+                    }
+                    if (me != null) {
+                        User use = new User();
+                        use.setId(me.getId());
+                        use.setName(me.getName());
+                        use.setLogin(me.getLogin());
+                        use.setAvatar_url(me.getAvatar_url());
+                        UserActivity.newInstance(MainActivity.this, use);
+                    }
+                }
+            });
+        } else {
+            mCache.removeMe();
+            username.setText("(未登录)");
+            tagline.setText("点击头像登录");
+            avatar.setImageResource(R.mipmap.ic_launcher);
+            avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openActivity(LoginActivity.class);
+                }
+            });
+        }
+
 
     }
 
@@ -146,8 +202,53 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            openActivity(SettingActivity.class);
+            return true;
+        } else if (id == R.id.action_notification) {
+            if (!mDiycode.isLogin()) {
+                openActivity(LoginActivity.class);
+
+            } else {
+                openActivity(NotificationActivity.class);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if (id == R.id.nav_post) {
+            if (!mDiycode.isLogin()) {
+                openActivity(LoginActivity.class);
+                return true;
+            }
+            MyTopicActivity.newInstance(this, MyTopicActivity.InfoType.MY_TOPIC);
+        } else if (id == R.id.nav_collect) {
+            if (!mDiycode.isLogin()) {
+                openActivity(LoginActivity.class);
+                return true;
+            }
+            MyTopicActivity.newInstance(this, MyTopicActivity.InfoType.MY_COLLECT);
+        } else if (id == R.id.nav_about) {
+            openActivity(AboutActivity.class);
+
+        } else if (id == R.id.nav_setting) {
+            openActivity(SettingActivity.class);
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
