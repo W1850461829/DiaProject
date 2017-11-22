@@ -80,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public ViewHolder getmViewHolder() {
+    public ViewHolder getViewHolder() {
         return mViewHolder;
     }
 
@@ -127,6 +127,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void openActivity(Context context, Class<?> cls) {
         Intent intent = new Intent(context, cls);
         context.startActivity(intent);
+    }
+    /**
+     * 打开 Activity 的同时传递一个数据
+     */
+    protected <V extends Serializable> void openActivity(Class<?> cls, String key, V value) {
+        openActivity(this, cls, key, value);
     }
 
     /**

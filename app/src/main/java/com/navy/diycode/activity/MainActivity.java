@@ -20,8 +20,10 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.gcssloop.diycode_sdk.api.login.event.LogoutEvent;
 import com.gcssloop.diycode_sdk.api.user.bean.User;
 import com.gcssloop.diycode_sdk.api.user.bean.UserDetail;
+import com.gcssloop.diycode_sdk.api.user.event.GetMeEvent;
 import com.navy.diycode.R;
 import com.navy.diycode.base.app.BaseActivity;
 import com.navy.diycode.base.app.ViewHolder;
@@ -31,6 +33,10 @@ import com.navy.diycode.fragment.TopicListFragment;
 import com.navy.diycode.test.TextFragment;
 import com.navy.diycode.utils.Config;
 import com.navy.diycode.utils.DataCache;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private boolean isToolbarFirstClick = true;
@@ -48,10 +54,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initViews(ViewHolder holder, View root) {
+        EventBus.getDefault().register(this);
         mCache = new DataCache(this);
         mConfig = Config.getSingleInstance();
         initMenu(holder);
-        //initViewPager(holder);
+        initViewPager(holder);
     }
 
     private void initViewPager(ViewHolder holder) {
@@ -102,14 +109,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
-        // mCurrentPosition = mConfig.getMainViewPagerPosition();
+         mCurrentPosition = mConfig.getMainViewPagerPosition();
         mViewPager.setCurrentItem(mCurrentPosition);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+    // 如果收到此状态说明用户已经登录成功了
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogin(GetMeEvent event) {
+        if (event.isOk()) {
+            UserDetail me = event.getBean();
+            mCache.saveMe(me);
+            loadMenuData(); // 加载菜单数据
+        }
+    }
+
+    // 如果收到此状态说明用户登出了
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogout(LogoutEvent event) {
+        loadMenuData(); // 加载菜单数据
     }
 
     private void initMenu(ViewHolder holder) {
         Toolbar toolbar = holder.get(R.id.toolbar);
-        Toolbar toolbar1 = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setLogo(R.mipmap.logo_actionbar);
         DrawerLayout drawer = holder.get(R.id.drawer_layout);
         setSupportActionBar(toolbar);
@@ -271,7 +292,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void quickToTop() {
         switch (mCurrentPosition) {
-          /*  case 0:
+         case 0:
                 mFragment1.quickToTop();
                 break;
             case 1:
@@ -279,7 +300,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case 2:
                 mFragment3.quickToTop();
-                break;*/
+                break;
 
         }
 

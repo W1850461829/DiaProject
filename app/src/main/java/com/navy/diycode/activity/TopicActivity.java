@@ -1,20 +1,46 @@
+
+
 package com.navy.diycode.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import com.navy.diycode.R;
 import com.navy.diycode.base.app.BaseActivity;
 import com.navy.diycode.base.app.ViewHolder;
 
+
+/**
+ * 查看不同分类的 Topic
+ */
 public class TopicActivity extends BaseActivity {
+    private static String Key_Node_ID = "Key_Node_ID";
+    private static String Key_Node_Name = "Key_Node_Name";
 
-
-    @Override
-    protected int getLayoutId() {
-        return 0;
+    public static void newInstance(Context context, int nodeId, String nodeName) {
+        Intent intent = new Intent(context, TopicActivity.class);
+        intent.putExtra(Key_Node_ID, nodeId);
+        intent.putExtra(Key_Node_Name, nodeName);
+        context.startActivity(intent);
     }
 
-    @Override
-    protected void initViews(ViewHolder holder, View root) {
+    @Override protected int getLayoutId() {
+        return R.layout.activity_fragment;
+    }
 
+    @Override protected void initViews(ViewHolder holder, View root) {
+        Intent intent = getIntent();
+        int NodeId = intent.getIntExtra(Key_Node_ID, 0);
+        String NodeName = intent.getStringExtra(Key_Node_Name);
+        setTitle(NodeName);
+
+        NodeTopicListFragment fragment = NodeTopicListFragment.newInstance(NodeId);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.fragment, fragment);
+        transaction.commit();
     }
 }

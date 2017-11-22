@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2017 GcsSloop
   ~
@@ -13,19 +14,20 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~
-  ~ Last modified 2017-03-08 01:01:18
+  ~ Last modified 2017-03-20 01:47:41
   ~
   ~ GitHub:  https://github.com/GcsSloop
   ~ Website: http://www.gcssloop.com
   ~ Weibo:   http://weibo.com/GcsSloop
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-    <gradient
-        android:angle="135"
-        android:centerColor="#101D24"
-        android:endColor="#DB3937"
-        android:startColor="#101D24"
-        android:type="linear"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--正常-->
+    <item android:drawable="@drawable/bg_login_nomal" android:state_enabled="true" android:state_window_focused="false"/>
+    <item android:drawable="@drawable/bg_login_nomal" android:state_enabled="false"/>
+    <item android:drawable="@drawable/bg_login_nomal" android:state_focused="true"/>
+    <!--按压-->
+    <item android:drawable="@drawable/bg_login_click" android:state_pressed="true"/>
+
+</selector>
