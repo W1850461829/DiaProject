@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.gcssloop.diycode_sdk.api.Diycode;
 import com.navy.diycode.R;
+import com.navy.diycode.hackpatch.IMMLeaks;
 
 import java.io.Serializable;
 
@@ -28,13 +29,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ViewHolder mViewHolder;
     private Toast mToast;
 
-
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDiycode = Diycode.getSingleInstance();
         mViewHolder = new ViewHolder(getLayoutInflater(), null, getLayoutId());
         setContentView(mViewHolder.getRootView());
+        IMMLeaks.fixFocusedViewLeak(this.getApplication()); // 修复 InputMethodManager 引发的内存泄漏
         initActionBar(mViewHolder);
         initDatas();
         initViews(mViewHolder, mViewHolder.getRootView());

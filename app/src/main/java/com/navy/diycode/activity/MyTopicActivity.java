@@ -74,7 +74,7 @@ public class MyTopicActivity extends BaseActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (current_type == InfoType.MY_TOPIC) {
+        if (current_type == InfoType.MY_COLLECT) {
             setTitle("我的收藏");
             UserCollectionTopicFragment fragment1 = UserCollectionTopicFragment.newInstance(username);
             transaction.add(R.id.fragment, fragment1);
